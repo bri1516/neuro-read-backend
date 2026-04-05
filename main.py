@@ -59,11 +59,11 @@ def extraer_json_seguro(texto_sucio: str):
 async def generar_ejercicio(datos: PeticionEjercicio):
     logger.info(f"Petición recibida - Generar Ejercicio: Perfil {datos.perfil}, Nivel {datos.nivel}") # <--- AGREGADO: Registro
 
-model = genai.GenerativeModel('gemini-2.5-flash', generation_config={"temperature": 0.85})
+       model = genai.GenerativeModel('gemini-1.5-flash', generation_config={"temperature": 0.85})
   
     
     # Lógica de Especialización por Perfil
-    if datos.perfil == "infantil":
+        if datos.perfil == "infantil":
         contexto_rol = """
         Eres un cuentacuentos y terapeuta infantil de lenguaje. Tu tono es mágico, divertido y cálido. 
         Usa temáticas de animales, dinosaurios, magia o juegos. Lenguaje muy sencillo.
@@ -148,7 +148,7 @@ model = genai.GenerativeModel('gemini-2.5-flash', generation_config={"temperatur
 async def analizar_ejercicio(datos: PeticionAnalisis):
     logger.info(f"Petición recibida - Analizar Ejercicio. Original: '{datos.texto_original[:20]}...' Leído: '{datos.texto_leido[:20]}...'") # <--- AGREGADO
 
-    model = genai.GenerativeModel('gemini-2.5-flash', generation_config={"temperature": 0.85})
+    model = genai.GenerativeModel('gemini-1.5-flash', generation_config={"temperature": 0.85})
     
     # Ajustamos el tono de la retroalimentación
     if datos.perfil == "infantil":
