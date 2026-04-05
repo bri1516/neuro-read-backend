@@ -59,11 +59,10 @@ def extraer_json_seguro(texto_sucio: str):
 async def generar_ejercicio(datos: PeticionEjercicio):
     logger.info(f"Petición recibida - Generar Ejercicio: Perfil {datos.perfil}, Nivel {datos.nivel}") # <--- AGREGADO: Registro
 
-       model = genai.GenerativeModel('gemini-1.5-flash', generation_config={"temperature": 0.85})
+    model = genai.GenerativeModel('gemini-1.5-flash', generation_config={"temperature": 0.85})
   
-    
     # Lógica de Especialización por Perfil
-        if datos.perfil == "infantil":
+    if datos.perfil == "infantil":
         contexto_rol = """
         Eres un cuentacuentos y terapeuta infantil de lenguaje. Tu tono es mágico, divertido y cálido. 
         Usa temáticas de animales, dinosaurios, magia o juegos. Lenguaje muy sencillo.
@@ -180,7 +179,7 @@ async def analizar_ejercicio(datos: PeticionAnalisis):
         "precision": Un número entero del 0 al 100 estimando su precisión y fluidez,
         "analisis": "Un párrafo corto explicando qué hizo bien y dónde hubo trabas",
         "consejo": "Una recomendación técnica específica para su próxima lectura",
-        "nivel_recomendado": Solo si el nivel actual era 0, coloca aquí el número de nivel (1-10) sugerido. Si no, devuelve null.
+        "nivel_recommended": Solo si el nivel actual era 0, coloca aquí el número de nivel (1-10) sugerido. Si no, devuelve null.
     }}
     """
     
@@ -209,7 +208,7 @@ async def analizar_ejercicio(datos: PeticionAnalisis):
             "precision": 0,
             "analisis": "Hubo un problema al procesar el audio, pero lo importante es seguir practicando.",
             "consejo": "Asegúrate de estar en un lugar silencioso la próxima vez.",
-            "nivel_recomendado": None
+            "nivel_recommended": None
         }
 
 # ---------------------------------------------------------
