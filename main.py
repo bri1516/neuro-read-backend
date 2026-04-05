@@ -59,7 +59,7 @@ def extraer_json_seguro(texto_sucio: str):
 async def generar_ejercicio(datos: PeticionEjercicio):
     logger.info(f"Petición recibida - Generar Ejercicio: Perfil {datos.perfil}, Nivel {datos.nivel}") # <--- AGREGADO: Registro
 
-    model = genai.GenerativeModel('gemini-pro', generation_config={"temperature": 0.85})
+    model = genai.GenerativeModel('gemini-1.5-pro', generation_config={"temperature": 0.85})
     
     # Lógica de Especialización por Perfil
     if datos.perfil == "infantil":
@@ -147,7 +147,7 @@ async def generar_ejercicio(datos: PeticionEjercicio):
 async def analizar_ejercicio(datos: PeticionAnalisis):
     logger.info(f"Petición recibida - Analizar Ejercicio. Original: '{datos.texto_original[:20]}...' Leído: '{datos.texto_leido[:20]}...'") # <--- AGREGADO
 
-    model = genai.GenerativeModel('gemini-pro', generation_config={"temperature": 0.3})
+    model = genai.GenerativeModel('gemini-1.5-pro', generation_config={"temperature": 0.3})
     
     # Ajustamos el tono de la retroalimentación
     if datos.perfil == "infantil":
