@@ -137,8 +137,8 @@ async def generar_ejercicio(datos: PeticionEjercicio):
     except Exception as e:
         logger.error(f"Error generando ejercicio: {str(e)}") # <--- AGREGADO
         return {
-            "texto": "Inhala, exhala y lee a tu propio ritmo.", 
-            "guia": "Tómate tu tiempo, no hay prisa."
+            "texto": "Tenemos problemas en el servidor, intenta nuevamente en un minuto.", 
+            "guia": "Parece que el búho esta dormido, danos un minuto para despertarlo."
         }
 
 # ---------------------------------------------------------
@@ -208,8 +208,8 @@ async def analizar_ejercicio(datos: PeticionAnalisis):
         logger.error(f"Error en análisis: {str(e)}") # <--- AGREGADO
         return {
             "precision": 0,
-            "analisis": "Hubo un problema al procesar el audio, pero lo importante es seguir practicando.",
-            "consejo": "Asegúrate de estar en un lugar silencioso la próxima vez.",
+            "analisis": "¡Vaya! El búho se tomó un pequeño descanso técnico.",
+            "consejo": "Hubo un inconveniente con la conexión al cerebro de la IA. Por favor, reintenta en un momento.",
             "nivel_recommended": None
         }
 
