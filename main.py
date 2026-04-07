@@ -185,7 +185,7 @@ async def analizar_ejercicio(datos: PeticionAnalisis):
     """
     
     try:
-        logger.info(f"--- PROMPT ENVIADO A GEMINI ---\n{prompt}") # <--- AGREGA ESTA LÍNEA
+        logger.info(f"--- PROMPT ENVIADO A GEMINI ---\n{prompt_analisis}") # <--- AGREGA ESTA LÍNEA
         response = model.generate_content(prompt_analisis)
         res_limpia = response.text.replace('```json', '').replace('```', '').strip()
         
