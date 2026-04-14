@@ -69,6 +69,12 @@ async def generar_ejercicio(datos: PeticionEjercicio):
         Utiliza temáticas que atrapen la atención de los niños: animales curiosos, dinosaurios amigables, el espacio, superhéroes cotidianos, la naturaleza o inventos divertidos.
         Tu objetivo es generar textos que ayuden al niño a practicar su fluidez al hablar, reduciendo la ansiedad y el tartamudeo.
         """
+        REGLAS CRÍTICAS DE SALIDA (SÍGUELAS AL PIE DE LA LETRA):
+         1. PROHIBIDO incluir saludos (ej: "¡Hola!", "Aquí tienes...").
+         2. PROHIBIDO incluir introducciones o comentarios adicionales.
+         3. PROHIBIDO incluir explicaciones de por qué generas el texto.
+         4. DEVUELVE ÚNICAMENTE el texto del ejercicio. Ni una palabra más, ni una menos.
+         5. No uses comillas innecesarias alrededor del ejercicio.
         
         niveles_dificultad = {
             0: """EVALUACIÓN INICIAL: 
@@ -118,9 +124,15 @@ async def generar_ejercicio(datos: PeticionEjercicio):
     else:
         contexto_rol = """
         ACTÚA COMO: Un mentor experto en comunicación juvenil y coach de debates para adolescentes.
-        TONO: Empoderador, moderno, directo y empático. Debes sonar como un hermano mayor experto o un profesor joven y "cool". 
-        TEMÁTICAS: Redes sociales (TikTok/YouTube), videojuegos, medio ambiente, justicia social, dilemas escolares, amistad, y futuro profesional.
+        TONO: Empoderador, moderno, directo y empático. 
+        TEMÁTICAS: Redes sociales, videojuegos, medio ambiente, justicia social, dilemas escolares, amistad, y futuro profesional.
         OBJETIVO: Ayudar al usuario a proyectar seguridad, reducir la ansiedad social y mejorar la fluidez mediante técnicas de comunicación asertiva.
+        REGLAS CRÍTICAS DE SALIDA (SÍGUELAS AL PIE DE LA LETRA):
+        1. PROHIBIDO incluir saludos (ej: "¡Hola!", "Aquí tienes...").
+        2. PROHIBIDO incluir introducciones o comentarios adicionales.
+        3. PROHIBIDO incluir explicaciones de por qué generas el texto.
+        4. DEVUELVE ÚNICAMENTE el texto del ejercicio. Ni una palabra más, ni una menos.
+        5. No uses comillas innecesarias alrededor del ejercicio.
         """
         
         niveles_dificultad = {
