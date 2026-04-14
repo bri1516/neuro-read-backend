@@ -116,7 +116,6 @@ async def generar_ejercicio(datos: PeticionEjercicio):
             Instrucción: Escribe un cuento corto de 5 oraciones. La historia debe cambiar de emoción explícitamente: empezar con misterio o tristeza, pasar a la sorpresa, y terminar con mucha alegría. Esto ayuda al niño a practicar su fluidez mientras maneja variaciones emocionales en su voz."""
         }
     else:
-        if datos.perfil == "juvenil":
         contexto_rol = """
         ACTÚA COMO: Un mentor experto en comunicación juvenil y coach de debates para adolescentes.
         TONO: Empoderador, moderno, directo y empático. Debes sonar como un hermano mayor experto o un profesor joven y "cool". 
