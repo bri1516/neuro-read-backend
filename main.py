@@ -64,39 +64,111 @@ async def generar_ejercicio(datos: PeticionEjercicio):
     # Lógica de Especialización por Perfil
     if datos.perfil == "infantil":
         contexto_rol = """
-        Eres un cuentacuentos y terapeuta infantil de lenguaje. Tu tono es mágico, divertido y cálido. 
-        Usa temáticas de animales, dinosaurios, magia o juegos. Lenguaje muy sencillo.
+        Eres un guía amigable, cuentacuentos y experto en el desarrollo del lenguaje infantil (para niños de 3 a 10 años). 
+        Tu tono es motivador, claro, divertido y muy paciente. No hables como un médico, sino como un maestro de escuela primaria muy querido.
+        Utiliza temáticas que atrapen la atención de los niños: animales curiosos, dinosaurios amigables, el espacio, superhéroes cotidianos, la naturaleza o inventos divertidos.
+        Tu objetivo es generar textos que ayuden al niño a practicar su fluidez al hablar, reduciendo la ansiedad y el tartamudeo.
         """
+        
         niveles_dificultad = {
-            0: "EVALUACIÓN INICIAL: Un texto muy corto (15 palabras) que incluya una variedad de sonidos (vocales, sibilantes, nasales) para detectar dónde están las trabas del niño.",
-            1: "Vocales Mágicas: Palabras aisladas que empiecen con vocales o sonidos nasales muy suaves (m, n). Máximo 5 palabras.",
-            2: "Sílabas Saltofinas: Frases cortas de 3 palabras usando sílabas directas simples (la, ma, pa).",
-            3: "Primeras Palabras: Oraciones de 4 a 5 palabras de uso común. Sin consonantes trabadas.",
-            4: "Frases de Cristal: Frases cortas que incluyen comas obligatorias para forzar una pausa de respiración.",
-            5: "El Gran Lector: Lectura rítmica. Un texto de 2 líneas con una métrica constante para mantener el ritmo.",
-            6: "Cuentos Cortos: Un párrafo de 3 líneas sobre una pequeña aventura. Fomenta unir palabras fluidamente.",
-            7: "Rimas Divertidas: Poemas cortos o trabalenguas infantiles muy suaves.",
-            8: "Habla Veloz: Diálogo corto entre dos personajes.",
-            9: "Pequeño Orador: Explicar cómo funciona algo sencillo. 4 líneas.",
-            10: "Maestro de Magia: Un cuento de 5 líneas con diferentes emociones para practicar entonación."
+            0: """EVALUACIÓN INICIAL: 
+            Objetivo: Detectar trabas en diferentes sonidos. 
+            Instrucción: Escribe un párrafo único de máximo 25 a 30 palabras. Debe ser una historia sencilla (ej. un perro que persigue una pelota) pero que incluya obligatoriamente una mezcla de todos los sonidos: vocales (a, e, i, o, u), sonidos suaves (m, n, s, f) y sonidos fuertes (p, t, k, d, b). Usa oraciones cortas.""",
+
+            1: """Nivel 1 - Sonidos Suaves (Calentamiento): 
+            Objetivo: Iniciar el habla sin tensión. 
+            Instrucción: Genera una lista de 5 palabras sueltas o frases de solo 2 palabras. TODAS deben empezar estrictamente con vocales o con las consonantes suaves 'm' o 'n' (ejemplo: 'el oso', 'mi mono', 'un avión'). Evita por completo letras explosivas como p, t, k, c, q.""",
+
+            2: """Nivel 2 - Pasos Pequeños (Sílabas simples): 
+            Objetivo: Unir palabras con facilidad. 
+            Instrucción: Escribe 4 oraciones muy cortas (máximo 4 palabras por oración). Usa estructuras sencillas de sujeto y verbo (ejemplo: 'El gato bebe leche'). Evita palabras largas de más de 3 sílabas y NO uses grupos consonánticos complejos (nada de tr, pl, bl, cr, pr).""",
+
+            3: """Nivel 3 - Frases Cotidianas: 
+            Objetivo: Fluidez en el vocabulario del día a día. 
+            Instrucción: Escribe 4 oraciones de 5 a 6 palabras relacionadas con rutinas diarias (comer, jugar, ir a la escuela). Las palabras deben ser de uso muy común para un niño. Mantén una estructura directa y fácil de leer.""",
+
+            4: """Nivel 4 - El Semáforo (Pausas de respiración): 
+            Objetivo: Enseñar al niño a respirar en medio de la frase. 
+            Instrucción: Escribe 3 oraciones de longitud media (7 a 9 palabras). Es OBLIGATORIO incluir una coma (,) exactamente a la mitad de cada oración para forzar una pausa de respiración. Ejemplo: 'El perro grande, corre por el parque.'""",
+
+            5: """Nivel 5 - Lectura Rítmica: 
+            Objetivo: Mantener un ritmo constante al hablar. 
+            Instrucción: Escribe un poema muy corto o un texto de 4 líneas que tenga una métrica y ritmo repetitivo. Las rimas deben ser simples y predecibles (canciones de cuna o rimas infantiles básicas). Esto ayuda a que el cerebro anticipe la siguiente palabra y reduzca el tartamudeo.""",
+
+            6: """Nivel 6 - Pequeñas Aventuras (Coarticulación): 
+            Objetivo: Leer un párrafo completo sin detenerse abruptamente. 
+            Instrucción: Escribe una mini-historia continua de 3 oraciones conectadas. Usa conectores simples como 'y', 'luego', 'después'. La historia debe tener un inicio, desarrollo y final muy rápido (ej. Un sapo que busca su hoja para dormir). Máximo 35 palabras en total.""",
+
+            7: """Nivel 7 - Juego de Palabras (Rimas sin tensión): 
+            Objetivo: Jugar con la fonética sin causar bloqueos. 
+            Instrucción: Crea 2 mini-trabalenguas que sean MUY SUAVES. No deben ser difíciles de pronunciar, sino divertidos (juegos de aliteración con sonidos fáciles como la 'l' o la 's', ej. 'La luna ilumina la laguna'). Nada que fuerce demasiado la mandíbula o la lengua.""",
+
+            8: """Nivel 8 - Voces Divertidas (Diálogos cortos): 
+            Objetivo: Practicar cambios de entonación y toma de turnos. 
+            Instrucción: Escribe un diálogo de 4 líneas entre dos personajes (ej. un león y un ratón). Usa obligatoriamente signos de interrogación (?) y exclamación (!) para que el niño practique cambiar el volumen y el tono de su voz. Indica qué personaje habla en cada línea.""",
+
+            9: """Nivel 9 - Explicando el Mundo: 
+            Objetivo: Lenguaje expositivo básico. 
+            Instrucción: Escribe un texto explicativo de 4 oraciones donde se responda a una pregunta curiosa (ej. ¿Por qué brillan las estrellas? o ¿Cómo hacen miel las abejas?). El vocabulario puede ser un poquito más avanzado, ideal para niños de 8 a 10 años, pero manteniendo oraciones claras.""",
+
+            10: """Nivel 10 - El Gran Cuentacuentos (Prosodia y Emoción): 
+            Objetivo: Controlar la respiración bajo diferentes emociones. 
+            Instrucción: Escribe un cuento corto de 5 oraciones. La historia debe cambiar de emoción explícitamente: empezar con misterio o tristeza, pasar a la sorpresa, y terminar con mucha alegría. Esto ayuda al niño a practicar su fluidez mientras maneja variaciones emocionales en su voz."""
         }
     else:
+        if datos.perfil == "juvenil":
         contexto_rol = """
-        Eres un coach profesional de oratoria y comunicación para adultos. Tu tono es respetuoso, motivador y estructurado.
-        Usa temáticas del entorno laboral, tecnología, cultura o situaciones sociales reales.
+        ACTÚA COMO: Un mentor experto en comunicación juvenil y coach de debates para adolescentes.
+        TONO: Empoderador, moderno, directo y empático. Debes sonar como un hermano mayor experto o un profesor joven y "cool". 
+        TEMÁTICAS: Redes sociales (TikTok/YouTube), videojuegos, medio ambiente, justicia social, dilemas escolares, amistad, y futuro profesional.
+        OBJETIVO: Ayudar al usuario a proyectar seguridad, reducir la ansiedad social y mejorar la fluidez mediante técnicas de comunicación asertiva.
         """
+        
         niveles_dificultad = {
-            0: "EVALUACIÓN INICIAL: Un párrafo de presentación estándar (20 palabras) para medir la fluidez base, ritmo y control de pausas del usuario.",
-            1: "Inicio Suave: Palabras aisladas o frases de 2 palabras con sonidos iniciales relajados.",
-            2: "Sílabas de Seda: Oraciones cortas (4 palabras) enfocadas en la transición suave entre consonante y vocal.",
-            3: "Frases Cotidianas: Párrafo de 2 líneas simulando pedir un café o saludar a un vecino.",
-            4: "Control de Pausas: Textos con puntuación abundante para respetar las pausas para inhalar.",
-            5: "Lectura Fluida: Un texto informativo de 3 líneas sobre un tema de cultura general.",
-            6: "Conversación Social: Un diálogo simulado (ej. presentarse en una fiesta).",
-            7: "Entorno Laboral: Simular leer un reporte corto o dar una actualización de proyecto.",
-            8: "Manejo de Estrés: Texto que simula una situación de ligera presión.",
-            9: "Discurso Público: Un fragmento de discurso persuasivo corto.",
-            10: "Maestro de Fluidez: Simulación de una entrevista de trabajo compleja."
+            0: """EVALUACIÓN DE CONFIANZA: 
+            Genera un párrafo de 30 palabras donde el usuario se presenta a sí mismo en un nuevo grupo (ej: club de robótica o equipo de fútbol). 
+            Objetivo: Medir velocidad del habla y seguridad inicial.""",
+
+            1: """NIVEL 1 - EL BREAKING ICE (Inicios Suaves): 
+            Genera 5 frases cortas para iniciar una conversación en el recreo o pasillo. 
+            Regla Fonética: Deben iniciar con sonidos vocálicos o nasales suaves para evitar el bloqueo inicial. 
+            Ejemplo: 'Oye, ¿has visto...', 'Me parece que...'""",
+
+            2: """NIVEL 2 - OPINIÓN RÁPIDA (Sílabas conectadas): 
+            Genera 4 frases de reacción de 5 palabras sobre un tema tendencia (ej: una nueva serie). 
+            Instrucción: Enfócate en la unión de palabras (coarticulación) para que el pensamiento y el habla vayan al mismo ritmo.""",
+
+            3: """NIVEL 3 - EL CHAT EN VOZ ALTA (Fluidez informal): 
+            Genera un párrafo de 3 líneas simulando un audio de WhatsApp explicando un plan para el fin de semana. 
+            Estilo: Coloquial pero estructurado, usando conectores naturales.""",
+
+            4: """NIVEL 4 - RESPIRA Y OPINA (Pausas de control): 
+            Genera un texto de 3 oraciones largas donde el adolescente da su punto de vista sobre el uso del uniforme escolar.
+            Requisito: Coloca comas estratégicas para forzar pausas de inhalación antes de dar un argumento fuerte.""",
+
+            5: """NIVEL 5 - EXPOSICIÓN DE CLASE (Lectura Informativa): 
+            Genera un fragmento de 4 líneas sobre un dato curioso de tecnología o ciencia (ej: Inteligencia Artificial). 
+            Objetivo: Mantener la fluidez al leer datos técnicos sin acelerarse por el nerviosismo.""",
+
+            6: """NIVEL 6 - DEBATE EN EL AULA (Argumentación): 
+            Genera un texto donde el usuario defiende una postura (ej: ¿Son mejores los libros físicos o digitales?). 
+            Estructura: 'Yo opino que... porque... además...'. Ayuda a organizar el pensamiento lógico para reducir bloqueos.""",
+
+            7: """NIVEL 7 - STORYTELLING SOCIAL (Narrativa fluida): 
+            Genera un párrafo donde el usuario cuenta una anécdota graciosa que le pasó recientemente. 
+            Objetivo: Mantener el hilo conductor y el entusiasmo sin perder el control de la respiración.""",
+
+            8: """NIVEL 8 - DEFENDIENDO TU PUNTO (Manejo de presión): 
+            Genera un diálogo donde un amigo está en desacuerdo con el usuario sobre un videojuego o deporte. 
+            Instrucción: El usuario debe responder con asertividad y calma, manteniendo la fluidez a pesar de la "confrontación" simulada.""",
+
+            9: """NIVEL 9 - MINI TED TALK (Discurso Público): 
+            Genera un discurso motivador de 5 líneas para convencer a sus compañeros de reciclar o participar en un evento. 
+            Enfoque: Uso de retórica, énfasis en palabras clave y contacto visual imaginario.""",
+
+            10: """NIVEL 10 - EL GRAN RETO (Entrevista o Presentación Final): 
+            Simula una situación de alta importancia: presentarse para una beca, una audición o una entrevista para su primer trabajo de verano. 
+            Requisito: El texto debe incluir preguntas complejas que el usuario debe leer y responder con una estructura profesional y fluidez total."""
         }
 
     objetivo_tecnico = niveles_dificultad.get(datos.nivel, "Lectura libre para practicar fluidez.")
