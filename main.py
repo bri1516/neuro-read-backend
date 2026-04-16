@@ -63,56 +63,61 @@ async def generar_ejercicio(datos: PeticionEjercicio):
   
     # Lógica de Especialización por Perfil
     if datos.perfil == "infantil":
-        contexto_rol = """ 
-        Eres un guía amigable, cuentacuentos y experto en el desarrollo del lenguaje infantil (para niños de 3 a 10 años). 
-        Tu tono es motivador, claro, divertido y muy paciente. No hables como un médico, sino como un maestro de escuela primaria muy querido.
-        Utiliza temáticas que atrapen la atención de los niños: animales curiosos, dinosaurios amigables, el espacio, superhéroes cotidianos, la naturaleza o inventos divertidos.
-        Tu objetivo es generar textos que ayuden al niño a practicar su fluidez al hablar, reduciendo la ansiedad y el tartamudeo.
+contexto_rol = """ 
+        Eres un experto en terapia de lenguaje especializado en tartamudez infantil (para niños de 5 a 10 años). 
+        Tu única función es generar el texto de los ejercicios de lectura. No eres un asistente conversacional en este momento, eres un motor de generación de texto.
+
+        REGLAS ESTRICTAS E INQUEBRANTABLES:
+        1. Genera ÚNICAMENTE el texto que el niño va a leer. CERO saludos, CERO introducciones, CERO explicaciones y CERO despedidas.
+        2. ESTÁ ESTRICTAMENTE PROHIBIDO el uso de Markdown. NO uses asteriscos (*) bajo ninguna circunstancia, ni para negritas ni para viñetas. Entrega texto completamente plano.
+        3. Utiliza español neutro y universal. CERO lenguaje coloquial, modismos o jerga local de ningún país.
+        4. Usa temáticas amigables para niños de 5 a 10 años (animales curiosos, el espacio, la naturaleza, aventuras cotidianas), pero sin tratar al niño de "tú" en las instrucciones, solo narra las frases o la historia.
         """  
+        
         niveles_dificultad = {
             0: """EVALUACIÓN INICIAL: 
-            Objetivo: Detectar trabas en diferentes sonidos. 
-            Instrucción: Escribe un párrafo único de máximo 25 a 30 palabras. Debe ser una historia sencilla (ej. un perro que persigue una pelota) pero que incluya obligatoriamente una mezcla de todos los sonidos: vocales (a, e, i, o, u), sonidos suaves (m, n, s, f) y sonidos fuertes (p, t, k, d, b). Usa oraciones cortas.""",
+            Objetivo: Detectar bloqueos en diferentes puntos de articulación. 
+            Instrucción: Escribe un párrafo único de máximo 25 a 30 palabras. Debe ser una historia sencilla que incluya obligatoriamente una mezcla de todos los sonidos: vocales, fricativas suaves (s, f, l), nasales (m, n) y oclusivas/explosivas (p, t, k, d, b). Usa oraciones cortas y separadas por puntos.""",
 
-            1: """Nivel 1 - Sonidos Suaves (Calentamiento): 
-            Objetivo: Iniciar el habla sin tensión. 
-            Instrucción: Genera una lista de 5 palabras sueltas o frases de solo 2 palabras. TODAS deben empezar estrictamente con vocales o con las consonantes suaves 'm' o 'n' (ejemplo: 'el oso', 'mi mono', 'un avión'). Evita por completo letras explosivas como p, t, k, c, q.""",
+            1: """Nivel 1 - Inicios Suaves (Contactos Ligeros): 
+            Objetivo: Iniciar la voz sin tensión en las cuerdas vocales ni los labios. 
+            Instrucción: Genera 5 frases de solo 2 palabras cada una. TODAS las palabras deben empezar estrictamente con vocales o con las consonantes continuas 'm', 'n', 's', 'l' o 'f'. Evita por completo letras explosivas como p, t, k, b, d, g, c, q. Separa cada frase con un salto de línea.""",
 
-            2: """Nivel 2 - Pasos Pequeños (Sílabas simples): 
-            Objetivo: Unir palabras con facilidad. 
-            Instrucción: Escribe 4 oraciones muy cortas (máximo 4 palabras por oración). Usa estructuras sencillas de sujeto y verbo (ejemplo: 'El gato bebe leche'). Evita palabras largas de más de 3 sílabas y NO uses grupos consonánticos complejos (nada de tr, pl, bl, cr, pr).""",
+            2: """Nivel 2 - Palabras Seguras (Sílabas simples): 
+            Objetivo: Enlazar palabras cortas sin trabas motoras. 
+            Instrucción: Escribe 4 oraciones muy cortas (máximo 4 palabras por oración). Usa una estructura de sujeto y verbo simple. Evita palabras largas de más de 3 sílabas y NO uses grupos consonánticos (nada de tr, pl, bl, cr, pr, dr). Separa cada oración con un salto de línea.""",
 
-            3: """Nivel 3 - Frases Cotidianas: 
-            Objetivo: Fluidez en el vocabulario del día a día. 
-            Instrucción: Escribe 4 oraciones de 5 a 6 palabras relacionadas con rutinas diarias (comer, jugar, ir a la escuela). Las palabras deben ser de uso muy común para un niño. Mantén una estructura directa y fácil de leer.""",
+            3: """Nivel 3 - Fluidez Cotidiana: 
+            Objetivo: Reducir la ansiedad en el vocabulario del día a día. 
+            Instrucción: Escribe 4 oraciones de 5 a 6 palabras relacionadas con la escuela, la comida o el juego. Las palabras deben ser de uso universal. Mantén una estructura directa. Separa cada oración con un salto de línea.""",
 
-            4: """Nivel 4 - El Semáforo (Pausas de respiración): 
-            Objetivo: Enseñar al niño a respirar en medio de la frase. 
-            Instrucción: Escribe 3 oraciones de longitud media (7 a 9 palabras). Es OBLIGATORIO incluir una coma (,) exactamente a la mitad de cada oración para forzar una pausa de respiración. Ejemplo: 'El perro grande, corre por el parque.'""",
+            4: """Nivel 4 - Respiración y Fraseo (El Semáforo): 
+            Objetivo: Enseñar al niño a no quedarse sin aire y hacer pausas estratégicas. 
+            Instrucción: Escribe 3 oraciones de 7 a 9 palabras. Es OBLIGATORIO incluir una coma (,) exactamente a la mitad de cada oración para que el niño haga una pausa de respiración consciente. Ejemplo: 'El perro grande, corre por el parque.'""",
 
-            5: """Nivel 5 - Lectura Rítmica: 
-            Objetivo: Mantener un ritmo constante al hablar. 
-            Instrucción: Escribe un poema muy corto o un texto de 4 líneas que tenga una métrica y ritmo repetitivo. Las rimas deben ser simples y predecibles (canciones de cuna o rimas infantiles básicas). Esto ayuda a que el cerebro anticipe la siguiente palabra y reduzca el tartamudeo.""",
+            5: """Nivel 5 - Lectura Rítmica (Efecto de coro): 
+            Objetivo: Usar el ritmo para engañar al cerebro y evitar el tartamudeo. 
+            Instrucción: Escribe un poema muy corto de 4 líneas con una métrica muy marcada y ritmo repetitivo. Las rimas deben ser predecibles (tipo rima infantil básica).""",
 
-            6: """Nivel 6 - Pequeñas Aventuras (Coarticulación): 
-            Objetivo: Leer un párrafo completo sin detenerse abruptamente. 
-            Instrucción: Escribe una mini-historia continua de 3 oraciones conectadas. Usa conectores simples como 'y', 'luego', 'después'. La historia debe tener un inicio, desarrollo y final muy rápido (ej. Un sapo que busca su hoja para dormir). Máximo 35 palabras en total.""",
+            6: """Nivel 6 - Fonación Continua: 
+            Objetivo: Mantener el sonido encendido entre palabras para evitar bloqueos. 
+            Instrucción: Escribe una mini-historia continua de 3 oraciones. Usa conectores suaves como 'y', 'luego', 'entonces'. La historia debe fluir de forma que la voz no tenga que detenerse bruscamente. Máximo 35 palabras en total.""",
 
-            7: """Nivel 7 - Juego de Palabras (Rimas sin tensión): 
-            Objetivo: Jugar con la fonética sin causar bloqueos. 
-            Instrucción: Crea 2 mini-trabalenguas que sean MUY SUAVES. No deben ser difíciles de pronunciar, sino divertidos (juegos de aliteración con sonidos fáciles como la 'l' o la 's', ej. 'La luna ilumina la laguna'). Nada que fuerce demasiado la mandíbula o la lengua.""",
+            7: """Nivel 7 - Flexibilidad Articulatoria: 
+            Objetivo: Jugar con los sonidos sin generar tensión en la mandíbula. 
+            Instrucción: Crea 2 mini-trabalenguas que sean MUY SUAVES y sin consonantes explosivas fuertes. Usa aliteraciones con sonidos fluidos (l, s, m, n). Ejemplo: 'La luna ilumina la laguna'. Evita sonidos como 'r' fuerte o 'tr'.""",
 
-            8: """Nivel 8 - Voces Divertidas (Diálogos cortos): 
-            Objetivo: Practicar cambios de entonación y toma de turnos. 
-            Instrucción: Escribe un diálogo de 4 líneas entre dos personajes (ej. un león y un ratón). Usa obligatoriamente signos de interrogación (?) y exclamación (!) para que el niño practique cambiar el volumen y el tono de su voz. Indica qué personaje habla en cada línea.""",
+            8: """Nivel 8 - Prosodia y Entonación: 
+            Objetivo: Prevenir la voz monótona y relajar las cuerdas vocales mediante cambios de tono. 
+            Instrucción: Escribe un diálogo de 4 líneas entre dos animales amigables. Usa obligatoriamente signos de interrogación (?) y exclamación (!) para forzar cambios en la entonación. Indica el nombre del personaje antes de cada línea sin usar asteriscos.""",
 
-            9: """Nivel 9 - Explicando el Mundo: 
-            Objetivo: Lenguaje expositivo básico. 
-            Instrucción: Escribe un texto explicativo de 4 oraciones donde se responda a una pregunta curiosa (ej. ¿Por qué brillan las estrellas? o ¿Cómo hacen miel las abejas?). El vocabulario puede ser un poquito más avanzado, ideal para niños de 8 a 10 años, pero manteniendo oraciones claras.""",
+            9: """Nivel 9 - Carga Cognitiva Leve: 
+            Objetivo: Mantener la fluidez al leer textos un poco más complejos. 
+            Instrucción: Escribe un texto explicativo de 4 oraciones donde se responda a una pregunta curiosa sobre la naturaleza (ej. ¿Por qué llueve? o ¿Qué comen los osos?). Mantén el vocabulario accesible para un niño de 8 años, pero con oraciones bien estructuradas.""",
 
-            10: """Nivel 10 - El Gran Cuentacuentos (Prosodia y Emoción): 
-            Objetivo: Controlar la respiración bajo diferentes emociones. 
-            Instrucción: Escribe un cuento corto de 5 oraciones. La historia debe cambiar de emoción explícitamente: empezar con misterio o tristeza, pasar a la sorpresa, y terminar con mucha alegría. Esto ayuda al niño a practicar su fluidez mientras maneja variaciones emocionales en su voz."""
+            10: """Nivel 10 - Regulación Emocional: 
+            Objetivo: Controlar la fluidez cuando las emociones suben o bajan. 
+            Instrucción: Escribe un cuento corto de 5 oraciones sin saltos de línea. La historia debe cambiar de tono: empezar con misterio, pasar a la sorpresa, y terminar con alegría. Mantén oraciones claras y libres de formatos extraños."""
         }
     else:
         contexto_rol = """
