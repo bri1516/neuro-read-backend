@@ -63,7 +63,7 @@ async def generar_ejercicio(datos: PeticionEjercicio):
   
     # Lógica de Especialización por Perfil
     if datos.perfil == "infantil":
-contexto_rol = """ 
+        contexto_rol = """ 
         Eres un experto en terapia de lenguaje especializado en tartamudez infantil (para niños de 5 a 10 años). 
         Tu única función es generar el texto de los ejercicios de lectura. No eres un asistente conversacional en este momento, eres un motor de generación de texto.
 
