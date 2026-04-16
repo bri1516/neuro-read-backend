@@ -180,20 +180,27 @@ async def generar_ejercicio(datos: PeticionEjercicio):
 
     # El Prompt de Generación
     prompt = f"""
-    {contexto_rol}
-    
-    El usuario está en el NIVEL {datos.nivel}. 
-    (Nota: Si el nivel es 0, es su primera vez en la app y este es un texto de diagnóstico para calibrar su nivel).
-    
-    Genera un ejercicio único adaptado a este nivel.
-    Objetivo técnico estricto: {objetivo_tecnico}
-    
-    Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta:
-    {{
-        "texto": "El contenido que el usuario debe leer.",
-        "guia": "Instrucción previa a la lectura (ej. 'Inhala profundo antes de empezar')."
-    }}
-    """
+        {contexto_rol}
+        
+        El usuario está en el NIVEL {datos.nivel}. 
+        (Nota: Si el nivel es 0, es su primera vez en la app y este es un texto de diagnóstico para calibrar su nivel).
+        
+        Genera un ejercicio único adaptado a este nivel.
+        Objetivo técnico estricto: {objetivo_tecnico}
+        
+        INSTRUCCIONES PARA EL CAMPO 'GUIA':
+        La guía debe ser un mensaje de 2 a 3 oraciones que conecte humanamente con el usuario. 
+        1. Debe sonar cálida, paciente y profesional (tono de mentor o guía experto).
+        2. Debe validar el esfuerzo del usuario y recordarle que este es un espacio seguro para practicar.
+        3. Debe incluir un consejo técnico amable sobre la respiración, la calma o la visualización del éxito al hablar.
+        4. Prohibido el uso de lenguaje coloquial, muletillas o tecnicismos médicos fríos.
+        
+        Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta:
+        {{
+            "texto": "El contenido que el usuario debe leer (sin formatos de asteriscos).",
+            "guia": "El mensaje cálido, empático y orientador para el usuario."
+        }}
+        """
     
     try:
         logger.info(f"--- PROMPT ENVIADO A GEMINI ---\n{prompt}") # <--- AGREGA ESTA LÍNEA
